@@ -1,0 +1,45 @@
+---
+interface Skill {
+  name: string;
+  // 1 = Foundation, 2 = Proficient, 3 = Advanced, 4 = Production-level
+  level: 1 | 2 | 3 | 4;
+}
+
+interface Props {
+  category: string;
+  skills: Skill[];
+}
+
+const { category, skills } = Astro.props;
+
+const LEVEL_LABEL: Record<number, string> = {
+  1: 'Foundation',
+  2: 'Proficient',
+  3: 'Advanced',
+  4: 'Production-level',
+};
+---
+
+<div>
+  <h3 class="mb-3 text-xs font-semibold uppercase tracking-widest text-zinc-500">{category}</h3>
+  <ul class="space-y-2">
+    {skills.map((skill) => (
+      <li class="flex items-center justify-between gap-3">
+        <span class="text-sm text-zinc-300">{skill.name}</span>
+        <span
+          class="flex shrink-0 gap-1"
+          role="img"
+          aria-label={`${skill.name}: ${LEVEL_LABEL[skill.level]}`}
+        >
+          {[1, 2, 3, 4].map((segment) => (
+            <span
+              class={`h-1.5 w-4 rounded-sm ${
+                segment <= skill.level ? 'bg-emerald-500' : 'bg-zinc-800'
+              }`}
+            />
+          ))}
+        </span>
+      </li>
+    ))}
+  </ul>
+</div>

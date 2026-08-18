@@ -1,0 +1,261 @@
+---
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets';
+import Base from '../layouts/Base.astro';
+import ProjectCard from '../components/ProjectCard.astro';
+import SkillGroup from '../components/SkillGroup.astro';
+import domagojPhoto from '../assets/domagoj.png';
+
+const allProjects = await getCollection('projects');
+const projects = allProjects.sort((a, b) => a.data.order - b.data.order);
+
+// Headline outcomes pulled straight from the case studies below — no invented numbers.
+const stats = [
+  { value: '30%', label: 'faster incident resolution', source: 'Eturnity' },
+  { value: '40%', label: 'faster deployments', source: 'INTIS' },
+  { value: '$100k/yr', label: 'cut in infrastructure costs', source: 'SeekandHit' },
+];
+
+// Proficiency: 1 = Foundation, 2 = Proficient, 3 = Advanced, 4 = Production-level
+const skillGroups = [
+  {
+    category: 'Backend Engineering',
+    skills: [
+      { name: 'Python', level: 4 },
+      { name: 'FastAPI', level: 4 },
+      { name: 'Django', level: 3 },
+      { name: 'Flask', level: 3 },
+      { name: 'Monolithic architectures', level: 4 },
+      { name: 'REST API design', level: 4 },
+      { name: 'Service integration', level: 4 },
+      { name: 'Authentication (JWT/OAuth)', level: 3 },
+      { name: 'Celery', level: 3 },
+      { name: 'Microservices architectures', level: 3 },
+      { name: 'API gateway / proxies', level: 3 },
+      { name: 'System design', level: 3 },
+    ],
+  },
+  {
+    category: 'Cloud & Infrastructure',
+    skills: [
+      { name: 'Docker & containerization', level: 4 },
+      { name: 'CI/CD (GitHub Actions)', level: 3 },
+      { name: 'Environment configuration', level: 3 },
+      { name: 'Cloud deployments', level: 3 },
+      { name: 'AWS (IAM, S3, EC2, Cognito)', level: 2 },
+      { name: 'Jenkins', level: 2 },
+      { name: 'Kubernetes', level: 2 },
+    ],
+  },
+  {
+    category: 'Reliability & Operations',
+    skills: [
+      { name: 'Production debugging', level: 4 },
+      { name: 'Incident investigation', level: 4 },
+      { name: 'Automated testing (pytest)', level: 3 },
+      { name: 'CI pipeline optimization', level: 3 },
+      { name: 'Service monitoring & observability', level: 3 },
+      { name: 'Performance optimization', level: 3 },
+    ],
+  },
+  {
+    category: 'Data & Storage',
+    skills: [
+      { name: 'PostgreSQL', level: 4 },
+      { name: 'SQL & query optimization', level: 4 },
+      { name: 'Data modeling & schema design', level: 4 },
+      { name: 'ORM usage (Django ORM, SQLAlchemy)', level: 4 },
+      { name: 'Database migrations (Alembic)', level: 3 },
+      { name: 'Indexing & performance tuning', level: 3 },
+      { name: 'Redis', level: 2 },
+      { name: 'MongoDB', level: 2 },
+      { name: 'Firebase', level: 2 },
+    ],
+  },
+  {
+    category: 'Tools & Workflow',
+    skills: [
+      { name: 'Git', level: 4 },
+      { name: 'Jira', level: 4 },
+      { name: 'Agile / Scrum', level: 4 },
+      { name: 'Code reviews', level: 3 },
+      { name: 'API documentation', level: 3 },
+      { name: 'Versioned API design', level: 3 },
+      { name: 'Postman / API testing tools', level: 3 },
+      { name: 'Linux command line', level: 2 },
+    ],
+  },
+  {
+    category: 'Frontend',
+    skills: [
+      { name: 'Frontend-backend integration', level: 3 },
+      { name: 'JavaScript', level: 3 },
+      { name: 'Next.js', level: 3 },
+      { name: 'Vue.js', level: 2 },
+    ],
+  },
+];
+---
+
+<Base>
+  <div class="mx-auto max-w-4xl px-6 py-16">
+
+    <!-- Hero -->
+    <section class="relative mb-20">
+      <div
+        class="pointer-events-none absolute -top-24 left-1/2 -z-10 h-72 w-[36rem] -translate-x-1/2 rounded-full bg-emerald-500/10 blur-3xl"
+        aria-hidden="true"
+      >
+      </div>
+
+      <div class="flex flex-col-reverse items-center gap-10 sm:flex-row sm:items-center sm:justify-between sm:gap-12">
+        <div class="sm:flex-1">
+          <p class="mb-3 flex items-center gap-2 text-sm font-medium tracking-widest text-emerald-400 uppercase">
+            <span class="relative flex h-2 w-2">
+              <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-emerald-400 opacity-75"></span>
+              <span class="relative inline-flex h-2 w-2 rounded-full bg-emerald-400"></span>
+            </span>
+            Available for work · Zurich, Switzerland
+          </p>
+          <h1 class="mb-4 text-4xl font-bold leading-tight text-zinc-100 sm:text-5xl">
+            Backend engineer,<br />based in <span class="bg-gradient-to-r from-emerald-300 to-emerald-500 bg-clip-text text-transparent">Zurich</span>.
+          </h1>
+          <p class="mb-6 max-w-xl text-lg leading-relaxed text-zinc-400">
+            I like backend systems best when nobody has to think about them — the API responds, the pipeline runs,
+            the deploy just works. 5+ years of making that boring reliability happen with Django, FastAPI,
+            PostgreSQL, Docker, and AWS — with quantified cost and reliability wins to show for it.
+          </p>
+          <p class="mb-8 text-sm text-zinc-500">
+            Open to freelance backend/API projects and full-time mid-senior roles in Switzerland.
+            Swiss Permit B holder — no sponsorship required.
+          </p>
+          <div class="flex flex-col gap-3 sm:flex-row">
+            <a
+              href="/cv.pdf"
+              download
+              class="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-emerald-500"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 20 20"
+                fill="currentColor"
+                class="h-4 w-4"
+                aria-hidden="true"
+              >
+                <path
+                  d="M10 12.5a.75.75 0 0 1-.53-.22l-3.5-3.5a.75.75 0 1 1 1.06-1.06L9.25 9.94V3a.75.75 0 0 1 1.5 0v6.94l2.22-2.22a.75.75 0 1 1 1.06 1.06l-3.5 3.5a.75.75 0 0 1-.53.22Z"
+                />
+                <path
+                  d="M4.5 12.75a.75.75 0 0 1 .75.75v1.5c0 .414.336.75.75.75h8a.75.75 0 0 0 .75-.75v-1.5a.75.75 0 0 1 1.5 0v1.5A2.25 2.25 0 0 1 14 17.5H6a2.25 2.25 0 0 1-2.25-2.25v-1.5a.75.75 0 0 1 .75-.75Z"
+                />
+              </svg>
+              Download CV
+            </a>
+            <a
+              href="#contact"
+              class="inline-flex items-center justify-center gap-2 rounded-lg border border-zinc-700 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:border-zinc-500 hover:text-zinc-100"
+            >
+              Get in touch
+            </a>
+          </div>
+        </div>
+        <Image
+          src={domagojPhoto}
+          alt="Domagoj Puljić"
+          width={176}
+          height={176}
+          class="h-32 w-32 shrink-0 rounded-full object-cover ring-2 ring-emerald-400/40 ring-offset-4 ring-offset-zinc-950 sm:h-44 sm:w-44"
+        />
+      </div>
+
+      <!-- Impact at a glance -->
+      <div class="mt-14 grid grid-cols-1 gap-4 border-t border-zinc-800 pt-8 sm:grid-cols-3">
+        {stats.map((stat) => (
+          <div>
+            <p class="text-2xl font-bold text-emerald-400 sm:text-3xl">{stat.value}</p>
+            <p class="text-sm text-zinc-400">
+              {stat.label} <span class="text-zinc-600">· {stat.source}</span>
+            </p>
+          </div>
+        ))}
+      </div>
+    </section>
+
+    <!-- Skills -->
+    <section class="mb-24">
+      <h2 class="mb-2 text-xl font-semibold text-zinc-100">What I work with</h2>
+      <p class="mb-8 text-sm text-zinc-500">
+        Depth by category, not a badge collection — bars indicate hands-on proficiency, from
+        foundation to production-level.
+      </p>
+      <div class="grid gap-x-8 gap-y-8 md:grid-cols-2 lg:grid-cols-3">
+        {skillGroups.map((group) => (
+          <SkillGroup category={group.category} skills={group.skills} />
+        ))}
+      </div>
+    </section>
+
+    <!-- Projects / Case Studies -->
+    <section class="mb-24">
+      <h2 class="mb-2 text-xl font-semibold text-zinc-100">Work</h2>
+      <p class="mb-8 text-sm text-zinc-500">
+        Five roles, five different problems — the same pattern: find what's slow, fragile, or
+        expensive, and fix it.
+      </p>
+      <div class="grid gap-6 sm:grid-cols-2">
+        {projects.map(async (project) => {
+          const { Content } = await render(project);
+          // Extract first paragraph as preview body
+          const body = project.body
+            .split('\n\n')
+            .find((p: string) => p.trim().length > 0 && !p.startsWith('#')) ?? '';
+          return (
+            <ProjectCard
+              title={project.data.title}
+              stack={project.data.stack}
+              outcome={project.data.outcome}
+              body={body}
+            />
+          );
+        })}
+      </div>
+    </section>
+
+    <!-- Contact / CTA -->
+    <section id="contact" class="border-t border-zinc-800 pt-16">
+      <h2 class="mb-4 text-xl font-semibold text-zinc-100">Get in touch</h2>
+      <p class="mb-3 max-w-lg text-sm leading-relaxed text-zinc-400">
+        I am available for freelance backend and API projects, as well as full-time mid-senior
+        backend and cloud engineering roles in Switzerland. Swiss Permit B — no sponsorship needed.
+      </p>
+      <p class="mb-8 max-w-lg text-sm leading-relaxed text-zinc-500">
+        My process is straightforward: a short scoping call, a clear estimate, then regular
+        updates until it ships — no surprises at invoice time.
+      </p>
+      <div class="flex flex-col gap-3 sm:flex-row sm:gap-4">
+        <a
+          href="mailto:dpuljic01@gmail.com"
+          class="inline-flex items-center justify-center gap-2 rounded-lg bg-emerald-600 px-5 py-2.5 text-sm font-medium text-white transition-colors hover:bg-emerald-500"
+        >
+          dpuljic01@gmail.com
+        </a>
+        <a
+          href="https://www.linkedin.com/in/domagoj-puljic"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="inline-flex items-center justify-center gap-2 rounded-lg border border-zinc-700 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:border-zinc-500 hover:text-zinc-100"
+        >
+          LinkedIn
+        </a>
+        <a
+          href="/cv.pdf"
+          download
+          class="inline-flex items-center justify-center gap-2 rounded-lg border border-zinc-700 px-5 py-2.5 text-sm font-medium text-zinc-300 transition-colors hover:border-zinc-500 hover:text-zinc-100"
+        >
+          Download CV
+        </a>
+      </div>
+    </section>
+
+  </div>
+</Base>

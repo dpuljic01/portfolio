@@ -1,0 +1,27 @@
+---
+interface Props {
+  title: string;
+  stack: string[];
+  outcome: string;
+  body: string;
+}
+
+const { title, stack, outcome, body } = Astro.props;
+---
+
+<article class="group relative flex flex-col gap-4 overflow-hidden rounded-lg border border-zinc-800 bg-zinc-900 p-6 transition-colors hover:border-emerald-500/40">
+  <div class="absolute inset-x-0 top-0 h-0.5 bg-gradient-to-r from-emerald-400 to-emerald-600 opacity-0 transition-opacity duration-300 group-hover:opacity-100"></div>
+
+  <p class="text-base font-semibold leading-snug text-emerald-400">{outcome}</p>
+  <h3 class="text-sm font-medium text-zinc-500">{title}</h3>
+
+  <p class="text-sm leading-relaxed text-zinc-400">{body}</p>
+
+  <div class="mt-auto flex flex-wrap gap-2 pt-2">
+    {stack.map((tech) => (
+      <span class="rounded-md bg-zinc-800 px-2 py-0.5 text-xs text-zinc-300">
+        {tech}
+      </span>
+    ))}
+  </div>
+</article>
