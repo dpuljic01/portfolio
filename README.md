@@ -47,9 +47,10 @@ npm run preview   # preview the production build locally
 
 ## Deployment
 
-Deployed on **Vercel**, connected to this GitHub repo for git-push deploys (no manual server
-steps). Custom domain **puljic.ch** is managed via **Hosttech DNS** (DNS-only — Hosttech is not
-the hosting target), pointed at Vercel with the A/CNAME records Vercel's domain settings specify.
+Live at **https://puljic.ch**. Deployed on **Vercel** (`renew-code/portfolio`), connected to this
+GitHub repo for git-push deploys (no manual server steps). Custom domain **puljic.ch** is managed
+via **Hosttech DNS** (DNS-only — Hosttech is not the hosting target), pointed at Vercel with the
+A records Vercel's domain settings specify.
 
 To deploy a change: push to `main` — Vercel builds and deploys automatically. To update DNS,
 change records directly in the Hosttech control panel.
