@@ -1,0 +1,22 @@
+---
+import Base from '../layouts/Base.astro';
+---
+
+<Base title="CV — Domagoj Puljic" description="Download Domagoj Puljic's CV.">
+  <div class="flex min-h-[70vh] flex-col items-center justify-center px-6 text-center">
+    <p class="mb-2 text-lg font-medium text-zinc-100">Your download should start automatically.</p>
+    <p class="mb-6 text-sm text-zinc-500">
+      If it doesn't, <a href="/cv.pdf" download class="text-emerald-400 underline hover:text-emerald-300">click here</a>.
+    </p>
+    <a href="/" class="text-sm text-zinc-500 underline hover:text-zinc-300">Back to portfolio</a>
+  </div>
+</Base>
+
+<script>
+  const link = document.createElement('a');
+  link.href = '/cv.pdf';
+  link.download = '';
+  document.body.appendChild(link);
+  link.click();
+  link.remove();
+</script>
